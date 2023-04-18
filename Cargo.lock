@@ -838,7 +838,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "mprocs"
+name = "mprocs-lib"
 version = "0.6.4"
 dependencies = [
  "anyhow",

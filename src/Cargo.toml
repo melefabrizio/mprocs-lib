@@ -1,9 +1,9 @@
 [package]
-name = "mprocs"
+name = "mprocs-lib"
 version = "0.6.4"
 description = "TUI for running multiple processes"
-repository = "https://github.com/pvolok/mprocs"
-authors = ["Pavel Volokitin <pavelvolokitin@gmail.com>"]
+repository = "https://github.com/melefabrizio/mprocs.lib"
+authors = ["Fabrizio Mele <fabrizio@mele.io>"]
 license = "MIT"
 edition = "2021"
 categories = [
@@ -25,6 +25,10 @@ include = ["*"]
 [[bin]]
 name = "mprocs"
 path = "main.rs"
+
+[lib]
+name = "mprocs"
+path = "lib.rs"
 
 [dependencies]
 anyhow = "1.0.44"
