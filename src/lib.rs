@@ -2,7 +2,6 @@ mod app;
 mod client;
 mod clipboard;
 mod config;
-mod config_lua;
 mod ctl;
 mod encode_term;
 mod error;
@@ -32,7 +31,6 @@ use app::server_main;
 use clap::{arg, command, ArgMatches};
 use client::client_main;
 use config::{CmdConfig, Config, ConfigContext, ProcConfig, ServerConfig};
-use config_lua::load_lua_config;
 use ctl::run_ctl;
 use flexi_logger::FileSpec;
 use keymap::Keymap;
@@ -178,15 +176,6 @@ fn load_config_value(
         )));
     }
 
-    {
-        let path = "mprocs.lua";
-        if Path::new(path).is_file() {
-            return Ok(Some((
-                read_value(path)?,
-                ConfigContext { path: path.into() },
-            )));
-        }
-    }
 
     {
         let path = "mprocs.yaml";
@@ -228,12 +217,7 @@ fn read_value(path: &str) -> Result<Value> {
         .map_or_else(|| "".to_string(), |ext| ext.to_string_lossy().to_string());
     let value: Value = match ext.as_str() {
         "yaml" | "yml" => serde_yaml::from_reader(reader)?,
-        "lua" => {
-            let mut buf = String::new();
-            reader.read_to_string(&mut buf)?;
-            load_lua_config(path, &buf)?
-        }
-        _ => bail!("Supported config extensions: lua, yaml, yml."),
+        _ => bail!("Supported config extensions: yaml, yml."),
     };
     Ok(value)
 }
