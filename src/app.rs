@@ -439,12 +439,17 @@ impl App {
           (width, height)
         };
 
+
         let area = AppLayout::new(
           Rect::new(0, 0, width, height),
           self.state.scope.is_zoomed(),
           &self.config,
         )
         .term_area();
+
+        self.terminal.backend_mut().set_size(width, height);
+        self.terminal.resize(area);
+
         for proc in &mut self.state.procs {
           proc.resize(area);
         }

@@ -6,6 +6,13 @@ use tui::{
 
 use crate::error::ResultLogger;
 
+impl ProxyBackend {
+  pub fn set_size(&mut self, width: u16, height: u16) {
+    self.width = width;
+    self.height = height;
+  }
+}
+
 #[derive(Debug)]
 pub enum SrvToClt {
   Draw { cells: Vec<(u16, u16, Cell)> },
